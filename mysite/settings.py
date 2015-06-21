@@ -88,7 +88,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Australia/NSW  '
+TIME_ZONE = 'Australia/NSW'
 
 USE_I18N = True
 
