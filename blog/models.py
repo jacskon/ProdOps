@@ -33,6 +33,9 @@ class Job(models.Model):
         self.published_date = timezone.now()
         self.save()
 
+    def __str__(self):
+        return self.name
+
 # """jobName1    jobParams1    jobTarget1    jobTargetType1    jobCredentials1    jobDescription1
 # jobName2    jobParams2    jobTarget2    jobTargetType2    jobCredentials2    jobDescription2
 # """

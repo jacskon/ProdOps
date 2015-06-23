@@ -85,6 +85,8 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
+LOGIN_REDIRECT_URL = '/'
+
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
