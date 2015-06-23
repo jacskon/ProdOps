@@ -16,3 +16,23 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Job(models.Model):
+    author = models.ForeignKey('auth.User')
+    name = models.CharField(max_length=200)
+    description = models.CharField(max_length=200)
+    parameters = models.TextField()
+    target = models.CharField(max_length=200)
+    target_type = models.CharField(max_length=200)
+    credentials = models.CharField(max_length=200)
+    created_date = models.DateTimeField(
+            default=timezone.now)
+
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()
+
+# """jobName1    jobParams1    jobTarget1    jobTargetType1    jobCredentials1    jobDescription1
+# jobName2    jobParams2    jobTarget2    jobTargetType2    jobCredentials2    jobDescription2
+# """

@@ -1,0 +1,12 @@
+{% extends "blog/base.html" %}
+{% block content %}
+{% for job in jobs %}
+    <div class="post">
+        <div class="date">
+            {{ job.created_date }}
+        </div>
+        <h1><a href="{% url "blog.views.post_detail" pk=job.pk %}">{{ job.name }}</a></h1>
+        <p>{{ job.description|linebreaks }}</p>
+    </div>
+{% endfor %}
+{% endblock content %}
