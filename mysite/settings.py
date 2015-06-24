@@ -85,7 +85,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/home'
 
 TIME_ZONE = 'UTC'
 

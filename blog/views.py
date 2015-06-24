@@ -5,9 +5,9 @@ from .forms import PostForm, JobForm
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 
+@login_required
 def index(request):
-    return render(request, 'blog/index.html')
-
+    return render(request, 'index.html')
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -55,18 +55,18 @@ def job_new(request):
             job.author = request.user
             job.published_date = timezone.now()
             job.save()
-            return redirect('blog.views.post_detail', pk=job.pk)
+            return redirect('blog.views.job_detail', pk=job.pk)
     else:
         form = JobForm()
     return render(request, 'blog/post_edit.html', {'form': form})
 
 def job_list(request):
     jobs = Job.objects.order_by('created_date')
-    return render(request, 'blog/job_list.html', {'jobs': jobs})
+    return render(request, 'jobs/job_list.html', {'jobs': jobs})
 
 def job_detail(request, pk):
     job = get_object_or_404(Job, pk=pk)
-    return render(request, 'blog/job_detail.html', {'job': job})
+    return render(request, 'jobs/job_detail.html', {'job': job})
 
 def post_draft_list(request):
     posts = Post.objects.filter(published_date__isnull=True).order_by('created_date')
