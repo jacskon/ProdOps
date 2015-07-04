@@ -1,9 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
-from .models import Post, Job
-from .forms import PostForm, JobForm
+from .models import Post, Job, Event
+from .forms import PostForm, JobForm, EventForm
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+import pdb
+import calendar
+
 
 @login_required
 def index(request):
@@ -46,7 +49,6 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
 
-
 def job_new(request):
     if request.method == "POST":
         form = JobForm(request.POST)
@@ -83,3 +85,52 @@ def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
     return redirect('blog.views.post_list')
+
+
+def calendar_view(request):
+    # pdb.set_trace()
+    events = Event.objects.all()
+    cals = (calendar.monthcalendar(2015, 6))
+    return render(request, 'calendar/calendar_list.html', {'cals': cals, 'events': events})
+
+def event_new(request):
+    if request.method == "POST":
+        form = EventForm(request.POST)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.author = request.user
+            event.save()
+            return redirect('blog.views.calendar_view')
+    else:
+        form = EventForm()
+    return render(request, 'blog/post_edit.html', {'form': form})
+
+@login_required
+def event_edit(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+    if request.method == "POST":
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.author = request.user
+            event.published_date = timezone.now()
+            event.save()
+            return redirect('blog.views.calendar_view')
+    else:
+        form = EventForm(instance=event)
+    return render(request, 'calendar/event_edit.html', {'form': form})
+
+def event_detail(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+    return render(request, 'calendar/event_detail.html', {'event': event})
+
+def event_remove(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+    event.delete()
+    return redirect('blog.views.calendar_view')
+
+def schedule(request):
+    weeks = (calendar.monthcalendar(2015, 6))
+    cals = (calendar.monthcalendar(2015, 6))
+    num_days = 7
+    return render(request, 'roster/roster.html', {'cals': cals, 'num_days': num_days})
