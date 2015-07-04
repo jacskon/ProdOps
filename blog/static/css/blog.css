@@ -45,3 +45,23 @@ h1, h2, h3, h4 {
 .post h1 a, .post h1 a:visited {
     color: #000000;
 }
+
+.row {
+    margin-right: 20px;
+}
+
+#event:hover {
+    border-radius: 25px;
+    background: white;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.cal-table:hover {
+    background-color: black;
+}
+
+.roster td, th {
+    vertical-align: middle !important;
+}
