@@ -1,9 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
-from .models import Post, Job
-from .forms import PostForm, JobForm
+from .models import Post, Job, Event, Comment
+from .forms import PostForm, JobForm, EventForm, CommentForm
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+import pdb
+import calendar
+
 
 @login_required
 def index(request):
@@ -46,7 +49,6 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
 
-
 def job_new(request):
     if request.method == "POST":
         form = JobForm(request.POST)
@@ -83,3 +85,79 @@ def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
     return redirect('blog.views.post_list')
+
+
+def calendar_view(request):
+    # pdb.set_trace()
+    events = Event.objects.all()
+    cals = (calendar.monthcalendar(2015, 7))
+    return render(request, 'calendar/calendar_list.html', {'cals': cals, 'events': events})
+
+def event_new(request):
+    if request.method == "POST":
+        form = EventForm(request.POST)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.author = request.user
+            event.save()
+            return redirect('blog.views.calendar_view')
+    else:
+        form = EventForm()
+    return render(request, 'blog/post_edit.html', {'form': form})
+
+@login_required
+def event_edit(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+    if request.method == "POST":
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.author = request.user
+            event.published_date = timezone.now()
+            event.save()
+            return redirect('blog.views.calendar_view')
+    else:
+        form = EventForm(instance=event)
+    return render(request, 'calendar/event_edit.html', {'form': form})
+
+def event_detail(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+    return render(request, 'calendar/event_detail.html', {'event': event})
+
+def event_remove(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+    event.delete()
+    return redirect('blog.views.calendar_view')
+
+def schedule(request):
+    weeks = (calendar.monthcalendar(2015, 6))
+    cals = (calendar.monthcalendar(2015, 6))
+    num_days = 7
+    return render(request, 'roster/roster.html', {'cals': cals, 'num_days': num_days})
+
+def add_comment_to_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+            return redirect('blog.views.post_detail', pk=post.pk)
+    else:
+        form = CommentForm()
+    return render(request, 'blog/add_comment_to_post.html', {'form': form})
+
+@login_required
+def comment_approve(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.approve()
+    return redirect('blog.views.post_detail', pk=comment.post.pk)
+
+@login_required
+def comment_remove(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    post_pk = comment.post.pk
+    comment.delete()
+    return redirect('blog.views.post_detail', pk=post_pk)

@@ -1,0 +1,76 @@
+{% extends "blog/../base.html" %}
+{% block content %}
+    <table id="calendar"  class="table table-striped table-bordered table-hover">
+    <tr>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+        <th>Sunday</th>
+    </tr>
+    {% for week in cals %}
+        <tr>
+            {% for day in week %}
+                 <td class="col-md-1 cal-table">
+                     <div style="height: 100px; overflow:auto;">{{ day }}
+                     <br>
+                     {% for event in events %}
+                         {% if event.frequency == 'DAILY' %}
+                             {% if forloop.parentloop.counter < 6 %}
+                                <a href="{% url "blog.views.event_detail" pk=event.pk %}">
+                                    <div id="event">
+                                        {{ event.name }}
+                                    </div>
+                                 </a>
+                             {% endif %}
+                         {% elif event.frequency == 'WEEKLY' %}
+                             {% if forloop.parentloop.counter == event.day|add:0 %}
+                                <a href="{% url "blog.views.event_detail" pk=event.pk %}">
+                                    <div id="event">
+                                        {{ event.name }}
+                                    </div>
+                                 </a>
+                             {% endif %}
+                         {% elif event.frequency == 'FORTNIGHTLY' %}
+                             {% if event.start_week|divisibleby:2 %}
+                                 {% if forloop.parentloop.parentloop.counter|divisibleby:2 %}
+                                     {% if forloop.parentloop.counter == event.day|add:0 %}
+                                         <a href="{% url "blog.views.event_detail" pk=event.pk %}">
+                                            <div id="event">
+                                                {{ event.name }}
+                                            </div>
+                                         </a>
+                                     {% endif %}
+                                 {% endif %}
+                             {% else %}
+                                 {% if forloop.parentloop.parentloop.counter == 1 or forloop.parentloop.parentloop.counter == 3 or forloop.parentloop.parentloop.counter == 5 %}
+                                     {% if forloop.parentloop.counter == event.day|add:0 %}
+                                         <a href="{% url "blog.views.event_detail" pk=event.pk %}">
+                                            <div id="event">
+                                                {{ event.name }}
+                                            </div>
+                                         </a>
+                                     {% endif %}
+                                 {% endif %}
+                             {% endif %}
+                         {% elif event.frequency == 'MONTHLY' %}
+                             {% if forloop.parentloop.parentloop.counter == event.start_week %}
+                                 {% if forloop.parentloop.counter == event.day|add:0 %}
+                                     <a href="{% url "blog.views.event_detail" pk=event.pk %}">
+                                        <div id="event">
+                                            {{ event.name }}
+                                        </div>
+                                     </a>
+                                {% endif %}
+                             {% endif %}
+                         {% endif %}
+                     {% endfor %}
+                     </div>
+                 </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock content %}
