@@ -31,6 +31,10 @@ h1, h2, h3, h4 {
     width: 100%;
 }
 
+.post-form button, input, select, textarea {
+    width: 100%;
+}
+
 .top-menu, .top-menu:hover, .top-menu:visited {
     color: #ffffff;
     float: right;
@@ -50,6 +54,10 @@ h1, h2, h3, h4 {
     margin-right: 20px;
 }
 
+#event {
+    font-size: 18px;
+}
+
 #event:hover {
     border-radius: 25px;
     background: white;
@@ -58,8 +66,16 @@ h1, h2, h3, h4 {
     text-decoration: none;
 }
 
+#event:hover #eventDescription {
+    display: block;
+}
+
+#eventDescription {
+    display:none;
+}
+
 .cal-table:hover {
-    background-color: black;
+    background-color: ghostwhite;
 }
 
 .roster td, th {
@@ -69,3 +85,42 @@ h1, h2, h3, h4 {
 .comment {
     margin: 20px 0px 20px 20px;
 }
+
+.pbi_summary {
+  width: 300px;
+  padding: 10px;
+  margin-right: 10px;
+  float:left;
+    font-size: 22px;
+}
+
+#container {
+    float: right;
+    /*margin-right: 11% !important;*/
+}
+
+#container1 {
+    float: right;
+    /*margin-right: 11% !important;*/
+}
+
+.pbi_summary td {
+    width: 100%;
+}
+
+#pbi {
+    font-size: 22px;
+}
+
+.highcharts-legend-item text {
+    font-size: 14px !important;
+}
+
+/*#calendar td {*/
+    /*font-size: 20px;*/
+/*}*/
+
+
+/*#calendar th {*/
+    /*font-size: 20px;*/
+/*}*/

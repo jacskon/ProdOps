@@ -3,15 +3,11 @@
 {% block content %}
     <div class="post">
         <h1>Welcome to the Prod Ops Website {{ user.username|title }}!</h1>
-        <p>You can use this website to post updates on your work, share social media, use functions such as emcli and much more.</p>
+        <p>This website will be used to look at features such as the calendar and list of PBI's.</p>
         <p>What would you like to do?</p>
             <ul>
-                <li><a href="{% url 'post_new' %}">Create Post</a></li>
-                <li><a href="{% url 'post_list' %}">View Posts</a></li>
-                <li><a href="{% url 'job_new' %}">Create Job</a></li>
-                <li><a href="{% url 'job_list' %}">View Jobs</a></li>
-                <li><a href="{% url 'event_new' %}">Create Event</a></li>
-                <li><a href="{% url 'calendar_view' %}">View Calendar</a></li>
+                <li><a href="{% url 'calendar_view' %}">Calendar</a></li>
+                <li><a href="{% url 'pbi' %}">PBI's</a></li>
             </ul>
     </div>
 {% endblock %}

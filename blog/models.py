@@ -85,6 +85,7 @@ class Event(models.Model):
     frequency = models.CharField(max_length=20, choices=how_often)
     day = models.IntegerField(choices=Days)
     start_week = models.IntegerField(choices=startweek)
+    team = models.TextField()
 
     def __str__(self):
         return self.name
@@ -117,3 +118,39 @@ class Comment(models.Model):
     def __str__(self):
         return self.text
 
+class Pbi(models.Model):
+    LOW = 'Low'
+    MEDIUM = 'Medium'
+    HIGH = 'High'
+    CRITICAL = 'Critical'
+    severity_options = (
+        (LOW, 'Low'),
+        (MEDIUM, 'Medium'),
+        (HIGH, 'High'),
+        (CRITICAL, 'Critical'),
+    )
+    IN_PROGRESS = 'In Progress'
+    UNDER_INVESTIGATION = 'Under Investigation'
+    PENDING = 'Pending'
+    ASSIGNED = 'Assigned'
+    status_options = (
+        (IN_PROGRESS, 'In Progress'),
+        (UNDER_INVESTIGATION, 'Under Investigation'),
+        (PENDING, 'Pending'),
+        (ASSIGNED, 'Assigned'),
+    )
+    number = models.IntegerField()
+    description = models.CharField(max_length=30)
+    severity = models.CharField(max_length=30, choices=severity_options)
+    status = models.CharField(max_length=30, choices=status_options)
+    assignee = models.CharField(max_length=30)
+    estimated_finish = models.DateField(
+        default=timezone.now)
+    next_action = models.CharField(max_length=30)
+
+    def approve(self):
+        self.approved = True
+        self.save()
+
+    def __str__(self):
+        return self.description

@@ -1,5 +1,9 @@
 {% extends "blog/../base.html" %}
+{% block menu_links %}
+    <a href="{% url 'event_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+{% endblock %}
 {% block content %}
+    <h1>{{ team.0 }} BAU Calendar | {{ month_name }}</h1>
     <table id="calendar"  class="table table-striped table-bordered table-hover">
     <tr>
         <th>Monday</th>
@@ -13,8 +17,10 @@
     {% for week in cals %}
         <tr>
             {% for day in week %}
-                 <td class="col-md-1 cal-table">
-                     <div style="height: 100px; overflow:auto;">{{ day }}
+                 <td class="col-md-1 cal-table" {% if today.day = day %}
+                    style="background-color: rgb(145, 255, 145);"
+                {% endif %}>
+                     <div style="height: 115px; overflow:auto;">{{ day }}
                      <br>
                      {% for event in events %}
                          {% if event.frequency == 'DAILY' %}
@@ -22,6 +28,7 @@
                                 <a href="{% url "blog.views.event_detail" pk=event.pk %}">
                                     <div id="event">
                                         {{ event.name }}
+                                        <div id="eventDescription">{{ event.description }}</div>
                                     </div>
                                  </a>
                              {% endif %}
@@ -30,6 +37,7 @@
                                 <a href="{% url "blog.views.event_detail" pk=event.pk %}">
                                     <div id="event">
                                         {{ event.name }}
+                                        <div id="eventDescription">{{ event.description }}</div>
                                     </div>
                                  </a>
                              {% endif %}
@@ -39,8 +47,9 @@
                                      {% if forloop.parentloop.counter == event.day|add:0 %}
                                          <a href="{% url "blog.views.event_detail" pk=event.pk %}">
                                             <div id="event">
-                                                {{ event.name }}
-                                            </div>
+                                            {{ event.name }}
+                                            <div id="eventDescription">{{ event.description }}</div>
+                                        </div>
                                          </a>
                                      {% endif %}
                                  {% endif %}
@@ -49,8 +58,9 @@
                                      {% if forloop.parentloop.counter == event.day|add:0 %}
                                          <a href="{% url "blog.views.event_detail" pk=event.pk %}">
                                             <div id="event">
-                                                {{ event.name }}
-                                            </div>
+                                            {{ event.name }}
+                                            <div id="eventDescription">{{ event.description }}</div>
+                                        </div>
                                          </a>
                                      {% endif %}
                                  {% endif %}
@@ -61,6 +71,7 @@
                                      <a href="{% url "blog.views.event_detail" pk=event.pk %}">
                                         <div id="event">
                                             {{ event.name }}
+                                            <div id="eventDescription">{{ event.description }}</div>
                                         </div>
                                      </a>
                                 {% endif %}
