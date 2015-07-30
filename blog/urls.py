@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
 
     #####HOME URL'S#####
-    url(r'^home/$', views.index),
+    url(r'^home/$', views.post_list),
     url(r'^$', 'django.contrib.auth.views.login'),
 
     ######JOB URL'S######
@@ -51,4 +51,7 @@ urlpatterns = [
     url(r'^pbi/(?P<pk>[0-9]+)/edit/$', views.pbi_edit, name='pbi_edit'),
     url(r'^pbi/(?P<pk>[0-9]+)/remove/$', views.pbi_remove, name='pbi_remove'),
     url(r'^chart/$', views.pbi_chart, name='chart'),
+
+    ######TASK URL'S########
+    url(r'^pbi/task/(?P<pk>[0-9]+)/edit/$', views.task_edit, name='task_edit'),
 ]

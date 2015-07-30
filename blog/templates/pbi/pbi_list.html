@@ -37,6 +37,78 @@
         {% endfor %}
         </tr>
     </table>
+    <table id="pbi"  class="table table-striped table-bordered table-hover">
+    <tr>
+        <th>Task</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+        <th>Sunday</th>
+    </tr>
+    <tr>
+        <th>
+            On Call
+        </th>
+        {% for on_caller in task_list %}
+            {% if on_caller.task == "On call" %}
+                {% for i in "xxxxxxx" %}
+                    <td><a href="{% url "task_edit" pk=on_caller.pk %}" class="pbi-link">{{ on_caller.user }}</a></td>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    </tr>
+    <tr>
+        <th>
+            Morning Shift
+        </th>
+        {% for tasker in task_list %}
+            {% if tasker.task == "Monday Morning Health Check" %}
+                <td><a href="{% url "task_edit" pk=tasker.pk %}" class="pbi-link">{{ tasker.user }}</a></td>
+            {% endif %}
+            {% if tasker.task == "Tuesday Morning Health Check" %}
+                <td><a href="{% url "task_edit" pk=tasker.pk %}" class="pbi-link">{{ tasker.user }}</a></td>
+            {% endif %}
+            {% if tasker.task == "Wednesday Morning Health Check" %}
+                <td><a href="{% url "task_edit" pk=tasker.pk %}" class="pbi-link">{{ tasker.user }}</a></td>
+            {% endif %}
+            {% if tasker.task == "Thursday Morning Health Check" %}
+                <td><a href="{% url "task_edit" pk=tasker.pk %}" class="pbi-link">{{ tasker.user }}</a></td>
+            {% endif %}
+            {% if tasker.task == "Friday Morning Health Check" %}
+                <td><a href="{% url "task_edit" pk=tasker.pk %}" class="pbi-link">{{ tasker.user }}</a></td>
+            {% endif %}
+        {% endfor %}
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <th>
+            Evening Shift
+        </th>
+        {% for tasker in task_list %}
+            {% if tasker.task == "Monday evening Standby" %}
+                <td><a href="{% url "task_edit" pk=tasker.pk %}" class="pbi-link">{{ tasker.user }}</a></td>
+            {% endif %}
+            {% if tasker.task == "Tuesday evening Standby" %}
+                <td><a href="{% url "task_edit" pk=tasker.pk %}" class="pbi-link">{{ tasker.user }}</a></td>
+            {% endif %}
+            {% if tasker.task == "Wednesday evening Restarts" %}
+                <td><a href="{% url "task_edit" pk=tasker.pk %}" class="pbi-link">{{ tasker.user }}</a></td>
+            {% endif %}
+            {% if tasker.task == "Thursday evening Standby" %}
+                <td><a href="{% url "task_edit" pk=tasker.pk %}" class="pbi-link">{{ tasker.user }}</a></td>
+            {% endif %}
+            {% if tasker.task == "Friday evening Standby" %}
+                <td><a href="{% url "task_edit" pk=tasker.pk %}" class="pbi-link">{{ tasker.user }}</a></td>
+            {% endif %}
+        {% endfor %}
+        <td></td>
+        <td></td>
+    </tr>
+    </table>
     <div id="container1" style="min-width: 310px; height: 350px; max-width: 600px; margin-right: 100px auto"></div>
     <div id="container" style="min-width: 310px; height: 350px; max-width: 600px; margin-right: 100px auto"></div>
     <table class="pbi_summary table table-striped table-bordered table-hover">
@@ -83,7 +155,22 @@
             <td>{{ pending_sum   }}</td>
         </tr>
     </table>
+
+    <button id="hide">Hide</button>
+    <button id="show">Show</button>
     <script>
+
+$(document).ready(function(){
+    $("#hide").click(function(){
+        $(".page-header").hide();
+        $(".page-header-space").show();
+    });
+    $("#show").click(function(){
+        $(".page-header").show();
+        $(".page-header-space").hide();
+    });
+});
+
 $(function () {
 
     $(document).ready(function () {

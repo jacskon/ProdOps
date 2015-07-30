@@ -2,6 +2,7 @@
     background-color: #ff9400;
     margin-top: 0;
     padding: 20px 20px 20px 40px;
+    height: 90px;
 }
 
 .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
@@ -124,3 +125,26 @@ h1, h2, h3, h4 {
 /*#calendar th {*/
     /*font-size: 20px;*/
 /*}*/
+
+@media screen and (max-width: 1400px) {
+    #event {
+        font-size: 12px;
+    }
+    #pbi {
+        font-size: 12px;
+    }
+    .pbi_summary {
+        font-size: 12px;
+    }
+}
+
+.site-title {
+    text-decoration: none;
+    float: left;
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.pbi-link {
+    color: black;
+}

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
-from .models import Post, Job, Event, Comment, Pbi
-from .forms import PostForm, JobForm, EventForm, CommentForm, PbiForm
+from .models import *
+from .forms import *
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 import calendar, datetime
@@ -182,6 +182,7 @@ def comment_remove(request, pk):
 @login_required
 def pbi_view(request):
     pbi = Pbi.objects.all()
+    task_list = Task.objects.all()
     medium_sum = pbi.filter(severity='Medium').count()
     low_sum = pbi.filter(severity='Low').count()
     high_sum = pbi.filter(severity='High').count()
@@ -195,7 +196,7 @@ def pbi_view(request):
                                                  'high_sum': high_sum, 'critical_sum': critical_sum,
                                                  'assigned_sum': assigned_sum, 'under_investigation_sum': under_investigation_sum,
                                                  'in_progress_sum': in_progress_sum, 'low_status_sum': low_status_sum,
-                                                 'pending_sum': pending_sum})
+                                                 'pending_sum': pending_sum, 'task_list': task_list})
 
 
 @login_required
@@ -238,3 +239,15 @@ def pbi_remove(request, pk):
 def pbi_chart(request):
     return render(request, 'pbi/chart.html')
 
+@login_required
+def task_edit(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    if request.method == "POST":
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.save()
+            return redirect('blog.views.pbi_view')
+    else:
+        form = TaskForm(instance=task)
+    return render(request, 'task/task_edit.html', {'form': form})

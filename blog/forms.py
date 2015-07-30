@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.admin.widgets import AdminDateWidget
-from blog.models import Post, Job, Event, Comment, Pbi
+from blog.models import Post, Job, Event, Comment, Pbi, Task
 
 class PostForm(forms.ModelForm):
 
@@ -32,6 +32,12 @@ class PbiForm(forms.ModelForm):
     class Meta:
         model = Pbi
         fields = ('number', 'description', 'severity', 'status', 'assignee', 'estimated_finish', 'next_action')
+
+class TaskForm(forms.ModelForm):
+
+    class Meta:
+        model = Task
+        fields = ('user',)
 
 # """jobName1    jobParams1    jobTarget1    jobTargetType1    jobCredentials1    jobDescription1
 # jobName2    jobParams2    jobTarget2    jobTargetType2    jobCredentials2    jobDescription2

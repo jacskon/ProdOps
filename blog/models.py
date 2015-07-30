@@ -154,3 +154,40 @@ class Pbi(models.Model):
 
     def __str__(self):
         return self.description
+
+class Task(models.Model):
+    MONDAY_MORNING = 'Monday Morning Health Check'
+    TUESDAY_MORNING = 'Tuesday Morning Health Check'
+    WEDNESDAY_MORNING = 'Wednesday Morning Health Check'
+    THURSDAY_MORNING = 'Thursday Morning Health Check'
+    FRIDAY_MORNING = 'Friday Morning Health Check'
+    ON_CALL = 'On call'
+    MONDAY_EVENING = 'Monday evening Standby'
+    TUESDAY_EVENING = 'Tuesday evening Standby'
+    WEDNESDAY_EVENING = 'Wednesday evening Restarts'
+    THURSDAY_EVENING = 'Thursday evening Standby'
+    FRIDAY_EVENING = 'Friday evening Standby'
+    task_choices = (
+        (MONDAY_MORNING, 'Monday Morning Health Check'),
+    (TUESDAY_MORNING, 'Tuesday Morning Health Check'),
+    (WEDNESDAY_MORNING, 'Wednesday Morning Health Check'),
+    (THURSDAY_MORNING, 'Thursday Morning Health Check'),
+    (FRIDAY_MORNING, 'Friday Morning Health Check'),
+    (ON_CALL, 'On call'),
+    (MONDAY_EVENING, 'Monday evening Standby'),
+    (TUESDAY_EVENING, 'Tuesday evening Standby'),
+    (WEDNESDAY_EVENING, 'Wednesday evening Restarts'),
+    (THURSDAY_EVENING, 'Thursday evening Standby'),
+    (FRIDAY_EVENING, 'Friday evening Standby'),
+    )
+    user = models.ForeignKey(Employee)
+    task = models.CharField(max_length=50, choices=task_choices)
+    modified_date = models.DateTimeField(
+            default=timezone.now)
+
+    def approve(self):
+        self.approved = True
+        self.save()
+
+    def __str__(self):
+        return self.task
