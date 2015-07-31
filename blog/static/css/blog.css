@@ -126,7 +126,7 @@ h1, h2, h3, h4 {
     /*font-size: 20px;*/
 /*}*/
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 2000px) {
     #event {
         font-size: 12px;
     }
@@ -147,4 +147,10 @@ h1, h2, h3, h4 {
 
 .pbi-link {
     color: black;
+}
+
+.recent-events {
+    float:right;
+    margin: 1.5% 0 0 10%;
+    height: 1000px;
 }

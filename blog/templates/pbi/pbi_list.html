@@ -38,6 +38,7 @@
         </tr>
     </table>
     <table id="pbi"  class="table table-striped table-bordered table-hover">
+    Week ending
     <tr>
         <th>Task</th>
         <th>Monday</th>
@@ -109,8 +110,7 @@
         <td></td>
     </tr>
     </table>
-    <div id="container1" style="min-width: 310px; height: 350px; max-width: 600px; margin-right: 100px auto"></div>
-    <div id="container" style="min-width: 310px; height: 350px; max-width: 600px; margin-right: 100px auto"></div>
+    <div id="container" style="min-width: 280px; height: 280px; max-width: 600px; margin-right: 100px auto"></div>
     <table class="pbi_summary table table-striped table-bordered table-hover">
         <tr>
             <th>Priority</th>
@@ -155,7 +155,6 @@
             <td>{{ pending_sum   }}</td>
         </tr>
     </table>
-
     <button id="hide">Hide</button>
     <button id="show">Show</button>
     <script>
@@ -172,103 +171,67 @@ $(document).ready(function(){
 });
 
 $(function () {
-
-    $(document).ready(function () {
-
-        // Build the chart
-        $('#container').highcharts({
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: true,
-                type: 'pie'
-            },
+    // Create the chart
+    $('#container').highcharts({
+        chart: {
+            type: 'column',
+            width: 500,
+        },
+        title: {
+            text: 'Priorities'
+        },
+        xAxis: {
+            type: 'category'
+        },
+        yAxis: {
             title: {
-                text: 'Priority'
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: false
-                    },
-                    showInLegend: true
-                }
-            },
-            series: [{
-                name: "Priorities",
-                colorByPoint: true,
-                data: [{
-                    name: "Crtitical",
-                    y: {{ critical_sum }}
-                }, {
-                    name: "High",
-                    y: {{ high_sum }},
-                    sliced: true,
-                    selected: true
-                }, {
-                    name: "Medium",
-                    y: {{ medium_sum }}
-                }, {
-                    name: "Low",
-                    y: {{ low_sum }}
-                }]
-            }]
-        });
-    });
-});
-$(function () {
+                text: 'Count'
+            }
 
-    $(document).ready(function () {
-
-        // Build the chart
-        $('#container1').highcharts({
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: true,
-                type: 'pie'
-            },
-            title: {
-                text: 'Status'
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: false
-                    },
-                    showInLegend: true
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y}'
                 }
-            },
-            series: [{
-                name: "Status",
-                colorByPoint: true,
-                data: [{
-                    name: "Assigned",
-                    y: {{ assigned_sum }}
-                }, {
-                    name: "Under investigation",
-                    y: {{ under_investigation_sum }},
-                    sliced: true,
-                    selected: true
-                }, {
-                    name: "In progress",
-                    y: {{ in_progress_sum }}
-                }, {
-                    name: "Pending",
-                    y: {{ pending_sum }}
-                }]
+            }
+        },
+
+        tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+        },
+
+        series: [{
+            name: "Brands",
+            colorByPoint: true,
+            data: [{
+                name: "Critical",
+                y: {{ critical_sum }},
+                drilldown: "Critical"
+            }, {
+                name: "High",
+                y: {{ high_sum }},
+                drilldown: "High"
+            }, {
+                name: "Medium",
+                y: {{ medium_sum }},
+                drilldown: "Medium"
+            }, {
+                name: "Low",
+                y: {{ low_sum }},
+                drilldown: "Low"
+            }, {
+                name: "Opera",
+                y: 0.91,
+                drilldown: "Opera"
             }]
-        });
+        }],
     });
 });
 	</script>

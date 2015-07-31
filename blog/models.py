@@ -147,6 +147,8 @@ class Pbi(models.Model):
     estimated_finish = models.DateField(
         default=timezone.now)
     next_action = models.CharField(max_length=30)
+    modified_date = models.DateTimeField(
+            default=timezone.now)
 
     def approve(self):
         self.approved = True
@@ -181,7 +183,7 @@ class Task(models.Model):
     (FRIDAY_EVENING, 'Friday evening Standby'),
     )
     user = models.ForeignKey(Employee)
-    task = models.CharField(max_length=50, choices=task_choices)
+    task = models.CharField(max_length=60, choices=task_choices)
     modified_date = models.DateTimeField(
             default=timezone.now)
 
