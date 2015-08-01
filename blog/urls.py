@@ -46,7 +46,7 @@ urlpatterns = [
 
     #######PBI URL'S#######
     url(r'^pbi/$', views.pbi_view, name='pbi'),
-    url(r'^/new/(?P<task_type>.*)/$', views.pbi_new, name='pbi_new'),
+    url(r'^new/(?P<task_type>.*)/$', views.pbi_new, name='pbi_new'),
     url(r'^pbi/(?P<pk>[0-9]+)/$', views.pbi_detail),
     url(r'^pbi/(?P<pk>[0-9]+)/edit/$', views.pbi_edit, name='pbi_edit'),
     url(r'^pbi/(?P<pk>[0-9]+)/remove/$', views.pbi_remove, name='pbi_remove'),
