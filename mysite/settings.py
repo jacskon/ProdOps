@@ -88,7 +88,7 @@ LANGUAGE_CODE = 'en-us'
 
 LOGIN_REDIRECT_URL = '/home'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Australia/Sydney'
 
 USE_I18N = True
 

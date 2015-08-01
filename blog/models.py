@@ -149,6 +149,7 @@ class Pbi(models.Model):
     number = models.IntegerField(null=True)
     title = models.CharField(max_length=30)
     description = models.TextField()
+    updates = models.TextField()
     severity = models.CharField(max_length=30, choices=severity_options)
     status = models.CharField(max_length=30, choices=status_options)
     assignee = models.CharField(max_length=30)

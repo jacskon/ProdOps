@@ -4,8 +4,10 @@
     <div class="post">
         <a class="btn btn-default" href="{% url "pbi_edit" pk=pbi.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
         <a class="btn btn-default" href="{% url "pbi_remove" pk=pbi.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
-        <h1>PBI: {{ pbi.number }}</h1>
-        <p>{{ pbi.description|linebreaks }}</p>
+        <h1>{{ pbi.title }}</h1>
+        <p>{{ pbi.description }}</p>
+        <p>{{ pbi.number }}</p>
+        <p>{{ pbi.updates|linebreaks }}</p>
     </div>
 {% endblock %}
 

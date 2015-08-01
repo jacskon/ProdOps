@@ -245,6 +245,10 @@ def pbi_edit(request, pk):
         form = PbiForm(request.POST, instance=pbi)
         if form.is_valid():
             pbi = form.save(commit=False)
+            current_timezone = timezone.localtime(timezone.now())
+            update_time = '{:%d-%m-%Y:%H:%M:%S}'.format(current_timezone)
+            pbi.updates = '[' + update_time + ']' + '   -    ' + pbi.next_action + '    -    ' \
+                          + (str(request.user)).capitalize() + '\n' + pbi.updates
             pbi.modified_date = timezone.now()
             pbi.save()
             return redirect('blog.views.pbi_view')
