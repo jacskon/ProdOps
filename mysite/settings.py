@@ -34,6 +34,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'blog',
 )
 
@@ -87,7 +88,7 @@ LANGUAGE_CODE = 'en-us'
 
 LOGIN_REDIRECT_URL = '/home'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Australia/Sydney'
 
 USE_I18N = True
 

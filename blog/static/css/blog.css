@@ -2,6 +2,7 @@
     background-color: #ff9400;
     margin-top: 0;
     padding: 20px 20px 20px 40px;
+    height: 90px;
 }
 
 .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
@@ -15,7 +16,7 @@
 }
 
 h1, h2, h3, h4 {
-    font-family: 'Lobster', cursive;
+    font-family: 'Arial';
 }
 
 .date {
@@ -28,6 +29,10 @@ h1, h2, h3, h4 {
 }
 
 .post-form textarea, .post-form input {
+    width: 100%;
+}
+
+.post-form button, input, select, textarea {
     width: 100%;
 }
 
@@ -44,4 +49,108 @@ h1, h2, h3, h4 {
 
 .post h1 a, .post h1 a:visited {
     color: #000000;
+}
+
+.row {
+    margin-right: 20px;
+}
+
+#event {
+    font-size: 18px;
+}
+
+#event:hover {
+    border-radius: 25px;
+    background: white;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+}
+
+#event:hover #eventDescription {
+    display: block;
+}
+
+#eventDescription {
+    display:none;
+}
+
+.cal-table:hover {
+    background-color: ghostwhite;
+}
+
+.roster td, th {
+    vertical-align: middle !important;
+}
+
+.comment {
+    margin: 20px 0px 20px 20px;
+}
+
+.pbi_summary {
+  width: 300px;
+  padding: 10px;
+  margin-right: 10px;
+  float:left;
+    font-size: 22px;
+}
+
+#container {
+    float: right;
+    /*margin-right: 11% !important;*/
+}
+
+#container1 {
+    float: right;
+    /*margin-right: 11% !important;*/
+}
+
+.pbi_summary td {
+    width: 100%;
+}
+
+#pbi {
+    font-size: 22px;
+}
+
+.highcharts-legend-item text {
+    font-size: 14px !important;
+}
+
+/*#calendar td {*/
+    /*font-size: 20px;*/
+/*}*/
+
+
+/*#calendar th {*/
+    /*font-size: 20px;*/
+/*}*/
+
+@media screen and (max-width: 1600px) {
+    #event {
+        font-size: 12px;
+    }
+    #pbi {
+        font-size: 12px;
+    }
+    .pbi_summary {
+        font-size: 12px;
+    }
+}
+
+.site-title {
+    text-decoration: none;
+    float: left;
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.pbi-link {
+    color: black;
+}
+
+.recent-events {
+    float:right;
+    margin: 1.5% 0 0 10%;
+    height: 1000px;
 }
