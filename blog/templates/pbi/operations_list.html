@@ -1,0 +1,163 @@
+{% extends "blog/../base.html" %}
+{% load staticfiles %}
+{% block menu_links %}
+    <a href="{% url 'pbi_new' task_type='operations' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+{% endblock %}
+{% block headers %}
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+{% endblock %}
+{% block content %}
+    <table id="pbi"  class="table table-striped table-bordered table-hover">
+        <tr>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Asignee</th>
+            <th>ETA</th>
+            <th>Next Action</th>
+            <th></th>
+        </tr>
+        {% for problem in operations_tasks %}
+            <tr>
+                <td>{{ problem.description }}</td>
+                <td>{{ problem.status }}</td>
+                <td>{{ problem.severity }}</td>
+                <td>{{ problem.assignee }}</td>
+                {% if problem.estimated_finish == None %}
+                    <td>TBC</td>
+                {% else %}
+                    <td>{{ problem.estimated_finish }}</td>
+                {% endif %}
+                <td>{{ problem.next_action }}</td>
+                <td style="text-align: center; word-spacing: 3px;"><a href="{% url "pbi_remove" pk=problem.pk %}"><span class="glyphicon glyphicon-remove"></span>  <a href="{% url "pbi_edit" pk=problem.pk %}"><span class="glyphicon glyphicon-edit"></span></td>
+            </tr>
+        {% endfor %}
+        </tr>
+    </table>
+    <div id="container" style="min-width: 280px; height: 280px; max-width: 600px; margin-right: 100px auto"></div>
+    <table class="pbi_summary table table-striped table-bordered table-hover">
+        <tr>
+            <th>Priority</th>
+            <th>Count</th>
+        </tr>
+        <tr>
+            <td>Critical</td>
+            <td>{{ critical_sum }}</td>
+        </tr>
+        <tr>
+            <td>High</td>
+            <td>{{ high_sum }}</td>
+        </tr>
+        <tr>
+            <td>Medium</td>
+            <td>{{ medium_sum }}</td>
+        </tr>
+        <tr>
+            <td>Low</td>
+            <td>{{ low_sum }}</td>
+        </tr>
+    </table>
+    <table class="pbi_summary table table-striped table-bordered table-hover">
+        <tr>
+            <th>Status</th>
+            <th>Count</th>
+        </tr>
+        <tr>
+            <td>Assigned</td>
+            <td>{{ assigned_sum }}</td>
+        </tr>
+        <tr>
+            <td>Under investigation</td>
+            <td>{{ under_investigation_sum }}</td>
+        </tr>
+        <tr>
+            <td>In Progress</td>
+            <td>{{ in_progress_sum }}</td>
+        </tr>
+        <tr>
+            <td>Pending</td>
+            <td>{{ pending_sum   }}</td>
+        </tr>
+    </table>
+    <button id="hide">Hide</button>
+    <button id="show">Show</button>
+    <script>
+
+$(document).ready(function(){
+    $("#hide").click(function(){
+        $(".page-header").hide();
+        $(".page-header-space").show();
+    });
+    $("#show").click(function(){
+        $(".page-header").show();
+        $(".page-header-space").hide();
+    });
+});
+
+$(function () {
+    // Create the chart
+    $('#container').highcharts({
+        chart: {
+            type: 'column',
+            width: 500,
+        },
+        title: {
+            text: 'Priorities'
+        },
+        xAxis: {
+            type: 'category'
+        },
+        yAxis: {
+            title: {
+                text: 'Count'
+            }
+
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y}'
+                }
+            }
+        },
+
+        tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+        },
+
+        series: [{
+            name: "Brands",
+            colorByPoint: true,
+            data: [{
+                name: "Critical",
+                y: {{ critical_sum }},
+                drilldown: "Critical"
+            }, {
+                name: "High",
+                y: {{ high_sum }},
+                drilldown: "High"
+            }, {
+                name: "Medium",
+                y: {{ medium_sum }},
+                drilldown: "Medium"
+            }, {
+                name: "Low",
+                y: {{ low_sum }},
+                drilldown: "Low"
+            }, {
+                name: "Opera",
+                y: 0.91,
+                drilldown: "Opera"
+            }]
+        }],
+    });
+});
+	</script>
+{% endblock content %}
