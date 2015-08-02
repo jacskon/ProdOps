@@ -1,14 +1,18 @@
 .page-header {
-    background-color: #ff9400;
     margin-top: 0;
     padding: 20px 20px 20px 40px;
-    height: 90px;
+    height: 100px;
+    margin-bottom: 40px !important;
+    box-shadow: 0px 10px 40px #B6B8B9;
 }
 
 .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
     color: #ffffff;
     font-size: 36pt;
     text-decoration: none;
+}
+.table-striped > tbody > tr:nth-child(2n+2) > td, .table-striped > tbody > tr:nth-child(2n+2) > th {
+   background-color: white;
 }
 
 .content {
@@ -37,9 +41,9 @@ h1, h2, h3, h4 {
 }
 
 .top-menu, .top-menu:hover, .top-menu:visited {
-    color: #ffffff;
+    color: #6F6F6F;
     float: right;
-    font-size: 26pt;
+    font-size: 20pt;
     margin-right: 20px;
 }
 
@@ -153,4 +157,10 @@ h1, h2, h3, h4 {
     float:right;
     margin: 1.5% 0 0 10%;
     height: 1000px;
+}
+
+.pcehr-logo {
+    width:275px;
+    height:100px;
+    margin-top:-10%;
 }
