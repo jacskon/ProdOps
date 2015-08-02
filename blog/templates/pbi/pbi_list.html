@@ -8,6 +8,7 @@
         <script src="http://code.highcharts.com/highcharts.js"></script>
 {% endblock %}
 {% block content %}
+    <h3>Production Operations PBI Tracker</h3>
     <table id="pbi"  class="table table-striped table-bordered table-hover">
         <tr>
             <th>PBI Number</th>
@@ -159,8 +160,6 @@
             <td>{{ pending_sum   }}</td>
         </tr>
     </table>
-    <button id="hide">Hide</button>
-    <button id="show">Show</button>
     <script>
 
 $(document).ready(function(){
@@ -235,4 +234,6 @@ $(function () {
     });
 });
 	</script>
+            <button id="hide">Hide</button>
+    <button id="show">Show</button>
 {% endblock content %}

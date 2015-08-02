@@ -8,6 +8,7 @@
         <script src="http://code.highcharts.com/highcharts.js"></script>
 {% endblock %}
 {% block content %}
+    <h3>Production Operations Task Tracker</h3>
     <table id="pbi"  class="table table-striped table-bordered table-hover">
         <tr>
             <th>Description</th>
@@ -16,7 +17,6 @@
             <th>Asignee</th>
             <th>ETA</th>
             <th>Next Action</th>
-            <th></th>
         </tr>
         {% for problem in operations_tasks %}
             <tr>

@@ -273,19 +273,13 @@ def pbi_chart(request):
 
 @login_required
 def task_edit(request, pk):
-    task_type = request.GET.get('type', '')
-    print(task_type)
     task = get_object_or_404(Task, pk=pk)
     if request.method == "POST":
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             task = form.save(commit=False)
-            task.modified_date = timezone.now()
             task.save()
             return redirect('blog.views.pbi_view')
     else:
-        if task_type == 'operations':
-            form = TaskForm(instance=task)
-        elif task_type == 'pbi':
-            form = OperationsForm(instance=task)
-    return render(request, 'task/task_edit.html', {'form': form, 'task_type': task_type})
+        form = TaskForm(instance=task)
+    return render(request, 'task/task_edit.html', {'form': form})
