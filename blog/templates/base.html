@@ -3,6 +3,7 @@
 <html>
     <head>
         <title>Prod Ops Website</title>
+        <link rel="icon" type="image/ico" href="{% static "img/pcehr_icon.ico" %}"/>
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <!-- Latest compiled and minified CSS -->
@@ -39,7 +40,6 @@
                 {% endblock %}
                 </div>
             </div>
-            <a href="{% url 'django.contrib.auth.views.logout' %}"><span class="glyphicon glyphicon-log-out">Logout</span></a>
         </div>
     </body>
 </html>

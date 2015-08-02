@@ -164,3 +164,8 @@ h1, h2, h3, h4 {
     height:100px;
     margin-top:-10%;
 }
+
+.login-form {
+    width: 20%;
+    margin: 0 auto;
+}
