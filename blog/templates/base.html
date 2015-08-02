@@ -27,7 +27,7 @@
             {% else %}
             <a href="{% url 'django.contrib.auth.views.login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
             {% endif %}
-            <a href="{% url 'blog.views.post_list' %}" class="top-menu site-title" style="float: left;">{{ request.user.groups.all.0 }}</a>
+            <a href="{% url 'blog.views.post_list' %}" class="top-menu site-title" style="float: left;"><img src="{% static "img/pcehr_logo.png" %}" class="pcehr-logo"></a>
         </div>
         <div class="page-header-space" style="display: none;"><br></div>
         <div class="content">
