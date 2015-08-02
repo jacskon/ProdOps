@@ -11,6 +11,9 @@
     font-size: 36pt;
     text-decoration: none;
 }
+.table-striped > tbody > tr:nth-child(2n+2) > td, .table-striped > tbody > tr:nth-child(2n+2) > th {
+   background-color: white;
+}
 
 .content {
     margin-left: 40px;
@@ -38,9 +41,9 @@ h1, h2, h3, h4 {
 }
 
 .top-menu, .top-menu:hover, .top-menu:visited {
-    color: #337AB7;
+    color: #6F6F6F;
     float: right;
-    font-size: 26pt;
+    font-size: 20pt;
     margin-right: 20px;
 }
 
