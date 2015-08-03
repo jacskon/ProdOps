@@ -15,7 +15,7 @@ def index(request):
 @login_required
 def post_list(request):
     pbi_task_list = Pbi.objects.all().filter(type='PBI').order_by('-modified_date')
-    operations_task_list = Pbi.objects.all().filter(type='operations').order_by('-modified_date')
+    operations_task_list = Pbi.objects.all().filter(type='Operations').order_by('-modified_date')
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     return render(request, 'blog/post_list.html', {'posts': posts, 'pbi_task_list': pbi_task_list,
                                                    'operations_task_list': operations_task_list})
@@ -204,7 +204,7 @@ def pbi_view(request):
 
 @login_required
 def operations_view(request):
-    operations_tasks = Pbi.objects.all().filter(type='operations')
+    operations_tasks = Pbi.objects.all().filter(type='Operations')
     task_list = Task.objects.all()
     medium_sum = operations_tasks.filter(severity='Medium').count()
     low_sum = operations_tasks.filter(severity='Low').count()
@@ -236,9 +236,9 @@ def pbi_new(request, task_type):
             pbi.save()
             return redirect('blog.views.'+task_type+'_view')
     else:
-        if task_type == 'pbi':
+        if task_type == 'PBI':
             form = PbiForm
-        elif task_type == 'operations':
+        elif task_type == 'Operations':
             form = OperationsForm
     return render(request, 'pbi/pbi_create.html', {'form': form, 'task_type': task_type})
 
