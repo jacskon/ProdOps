@@ -33,7 +33,9 @@
                     {% else %}
                         <td>{{ problem.estimated_finish }}</td>
                     {% endif %}
-                    <td>{{ problem.next_action }}</td>
+                    {% for update in next_action %}
+                        <td>{{ update.text }}</td>
+                    {% endfor %}
                     <td style="text-align: center; word-spacing: 3px;">
                         <a href="{% url "pbi_remove" pk=problem.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
                         <a href="{% url "pbi_edit" pk=problem.pk %}"><span class="glyphicon glyphicon-edit"></span></a>

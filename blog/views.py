@@ -205,6 +205,7 @@ def pbi_view(request):
 @login_required
 def operations_view(request):
     operations_tasks = Pbi.objects.all().filter(type='Operations')
+    next_action = Update.objects.all()
     task_list = Task.objects.all()
     medium_sum = operations_tasks.filter(severity='Medium').count()
     low_sum = operations_tasks.filter(severity='Low').count()
@@ -219,7 +220,7 @@ def operations_view(request):
                                                  'high_sum': high_sum, 'critical_sum': critical_sum,
                                                  'assigned_sum': assigned_sum, 'under_investigation_sum': under_investigation_sum,
                                                  'in_progress_sum': in_progress_sum, 'low_status_sum': low_status_sum,
-                                                 'pending_sum': pending_sum, 'task_list': task_list})
+                                                 'pending_sum': pending_sum, 'task_list': task_list, 'next_action': next_action,})
 
 
 @login_required
@@ -228,10 +229,6 @@ def pbi_new(request, task_type):
         form = PbiForm(request.POST)
         if form.is_valid():
             pbi = form.save(commit=False)
-            current_timezone = timezone.localtime(timezone.now())
-            update_time = '{:%d-%m-%Y:%H:%M:%S}'.format(current_timezone)
-            pbi.updates = '[' + update_time + ']' + '   -    ' + 'Opened' \
-                          + ' - ' + (str(request.user)).capitalize() + '\n'
             pbi.type = task_type
             pbi.save()
             return redirect('blog.views.'+task_type.lower()+'_view')
@@ -249,10 +246,6 @@ def pbi_edit(request, pk):
         form = PbiForm(request.POST, instance=pbi)
         if form.is_valid():
             pbi = form.save(commit=False)
-            current_timezone = timezone.localtime(timezone.now())
-            update_time = '{:%d-%m-%Y:%H:%M:%S}'.format(current_timezone)
-            pbi.updates = '[' + update_time + ']' + '   -    ' + pbi.next_action + '    -    ' \
-                          + (str(request.user)).capitalize() + '\n' + pbi.updates
             pbi.modified_date = timezone.now()
             pbi.save()
             return redirect('blog.views.pbi_view')
@@ -263,7 +256,8 @@ def pbi_edit(request, pk):
 @login_required
 def pbi_detail(request, pk):
     pbi = get_object_or_404(Pbi, pk=pk)
-    return render(request, 'pbi/pbi_detail.html', {'pbi': pbi})
+    update = Update.objects.all().filter(task=pbi)
+    return render(request, 'pbi/pbi_detail.html', {'pbi': pbi, 'update': update})
 
 @login_required
 def pbi_remove(request, pk):
@@ -287,3 +281,18 @@ def task_edit(request, pk):
     else:
         form = TaskForm(instance=task)
     return render(request, 'task/task_edit.html', {'form': form})
+
+@login_required
+def pbi_update(request, pk):
+    pbi = get_object_or_404(Pbi, pk=pk)
+    if request.method == "POST":
+        form = UpdateForm(request.POST)
+        if form.is_valid():
+            update = form.save(commit=False)
+            update.task = pbi
+            update.author = request.user
+            update.save()
+            return redirect('blog.views.pbi_view')
+    else:
+        form = UpdateForm()
+    return render(request, 'pbi/update/pbi_update.html', {'form': form})
