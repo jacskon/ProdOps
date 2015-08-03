@@ -9,39 +9,41 @@
 {% endblock %}
 {% block content %}
     <h3>Production Operations PBI Tracker</h3>
-    <table id="pbi"  class="table table-striped table-bordered table-hover">
-        <tr>
-            <th>PBI Number</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Priority</th>
-            <th>Asignee</th>
-            <th>ETA</th>
-            <th>Next Action</th>
-            <th></th>
-        </tr>
-        {% for problem in pbi %}
+    <div class="scroll-table">
+        <table id="pbi"  class="table table-striped table-bordered table-hover">
             <tr>
-                <td>{{ problem.number }}</td>
-                <td>{{ problem.description }}</td>
-                <td>{{ problem.status }}</td>
-                <td>{{ problem.severity }}</td>
-                <td>{{ problem.assignee }}</td>
-                {% if problem.estimated_finish == None %}
-                    <td>TBC</td>
-                {% else %}
-                    <td>{{ problem.estimated_finish }}</td>
-                {% endif %}
-                <td>{{ problem.next_action }}</td>
-                <td style="text-align: center; word-spacing: 3px;">
-                    <a href="{% url "pbi_remove" pk=problem.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
-                    <a href="{% url "pbi_edit" pk=problem.pk %}"><span class="glyphicon glyphicon-edit"></span></a>
-                    <a href="{% url "pbi_detail" pk=problem.pk %}"><span class="glyphicon glyphicon-info-sign"></span></a>
-                </td>
+                <th>PBI Number</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Asignee</th>
+                <th>ETA</th>
+                <th>Next Action</th>
+                <th></th>
             </tr>
-        {% endfor %}
-        </tr>
-    </table>
+            {% for problem in pbi %}
+                <tr>
+                    <td>{{ problem.number }}</td>
+                    <td>{{ problem.description }}</td>
+                    <td>{{ problem.status }}</td>
+                    <td>{{ problem.severity }}</td>
+                    <td>{{ problem.assignee }}</td>
+                    {% if problem.estimated_finish == None %}
+                        <td>TBC</td>
+                    {% else %}
+                        <td>{{ problem.estimated_finish }}</td>
+                    {% endif %}
+                    <td>{{ problem.next_action }}</td>
+                    <td style="text-align: center; word-spacing: 3px;">
+                        <a href="{% url "pbi_remove" pk=problem.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+                        <a href="{% url "pbi_edit" pk=problem.pk %}"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a href="{% url "pbi_detail" pk=problem.pk %}"><span class="glyphicon glyphicon-info-sign"></span></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tr>
+        </table>
+    </div>
     <table id="pbi"  class="table table-striped table-bordered table-hover">
     Week ending
     <tr>
