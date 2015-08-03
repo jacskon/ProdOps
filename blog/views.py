@@ -228,6 +228,10 @@ def pbi_new(request, task_type):
         form = PbiForm(request.POST)
         if form.is_valid():
             pbi = form.save(commit=False)
+            current_timezone = timezone.localtime(timezone.now())
+            update_time = '{:%d-%m-%Y:%H:%M:%S}'.format(current_timezone)
+            pbi.updates = '[' + update_time + ']' + '   -    ' + 'Opened' \
+                          + ' - ' + (str(request.user)).capitalize() + '\n'
             pbi.type = task_type
             pbi.save()
             return redirect('blog.views.'+task_type+'_view')
