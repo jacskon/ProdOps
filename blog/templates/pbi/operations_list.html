@@ -17,10 +17,11 @@
             <th>Asignee</th>
             <th>ETA</th>
             <th>Next Action</th>
+            <th></th>
         </tr>
         {% for problem in operations_tasks %}
             <tr>
-                <td>{{ problem.description }}</td>
+                <td>{{ problem.title }}</td>
                 <td>{{ problem.status }}</td>
                 <td>{{ problem.severity }}</td>
                 <td>{{ problem.assignee }}</td>
