@@ -184,7 +184,7 @@ def comment_remove(request, pk):
 
 @login_required
 def pbi_view(request):
-    pbi = Pbi.objects.all()
+    pbi = Pbi.objects.all().filter(type="PBI")
     task_list = Task.objects.all()
     medium_sum = pbi.filter(severity='Medium').count()
     low_sum = pbi.filter(severity='Low').count()

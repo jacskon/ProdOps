@@ -146,10 +146,10 @@ class Pbi(models.Model):
         (OPERATIONS, 'Operations'),
     )
 
-    number = models.IntegerField(null=True)
+    number = models.IntegerField(blank=True, null=True)
     title = models.CharField(max_length=30)
     description = models.TextField()
-    updates = models.TextField()
+    updates = models.TextField(blank=True, null=True)
     severity = models.CharField(max_length=30, choices=severity_options)
     status = models.CharField(max_length=30, choices=status_options)
     assignee = models.CharField(max_length=30)
@@ -165,7 +165,7 @@ class Pbi(models.Model):
         self.save()
 
     def __str__(self):
-        return self.description
+        return self.title
 
 class Task(models.Model):
     MONDAY_MORNING = 'Monday Morning Health Check'
