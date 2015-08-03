@@ -234,11 +234,11 @@ def pbi_new(request, task_type):
                           + ' - ' + (str(request.user)).capitalize() + '\n'
             pbi.type = task_type
             pbi.save()
-            return redirect('blog.views.'+task_type+'_view')
+            return redirect('blog.views.'+task_type.lower()+'_view')
     else:
         if task_type == 'PBI':
             form = PbiForm
-        elif task_type == 'Operations':
+        else:
             form = OperationsForm
     return render(request, 'pbi/pbi_create.html', {'form': form, 'task_type': task_type})
 
