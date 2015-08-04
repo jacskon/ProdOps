@@ -185,6 +185,10 @@ def comment_remove(request, pk):
 
 @login_required
 def pbi_view(request):
+    pbi_tasks = Pbi.objects.all().filter(type='PBI')
+    pbi_dict = {}
+    for pbi in pbi_tasks:
+            pbi_dict[pbi.id] = pbi.updates.all().filter(update_type="Next Action").order_by('-created_date')[0]
     pbi = Pbi.objects.all().filter(type="PBI")
     task_list = Task.objects.all()
     medium_sum = pbi.filter(severity='Medium').count()
@@ -200,12 +204,8 @@ def pbi_view(request):
                                                  'high_sum': high_sum, 'critical_sum': critical_sum,
                                                  'assigned_sum': assigned_sum, 'under_investigation_sum': under_investigation_sum,
                                                  'in_progress_sum': in_progress_sum, 'low_status_sum': low_status_sum,
-                                                 'pending_sum': pending_sum, 'task_list': task_list})
-
-
-@register.filter
-def get_item(dictionary, key):
-    return dictionary.get(key)
+                                                 'pending_sum': pending_sum, 'task_list': task_list,
+                                                 'pbi_dict': pbi_dict})
 
 @login_required
 def operations_view(request):
