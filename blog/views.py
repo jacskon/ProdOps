@@ -5,6 +5,7 @@ from .forms import *
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 import calendar, datetime
+from django.template.defaulttags import register
 
 
 @login_required
@@ -202,10 +203,17 @@ def pbi_view(request):
                                                  'pending_sum': pending_sum, 'task_list': task_list})
 
 
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)
+
 @login_required
 def operations_view(request):
     operations_tasks = Pbi.objects.all().filter(type='Operations')
-    next_action = Update.objects.all()
+    update_dict_dick = {}
+    for pbi in operations_tasks:
+            update_dict_dick[pbi.id] = pbi.updates.all().filter(update_type="Next Action").order_by('-created_date')[0]
+    updates = Update.objects.all().filter(update_type='Next Action').order_by('-created_date')
     task_list = Task.objects.all()
     medium_sum = operations_tasks.filter(severity='Medium').count()
     low_sum = operations_tasks.filter(severity='Low').count()
@@ -220,7 +228,8 @@ def operations_view(request):
                                                  'high_sum': high_sum, 'critical_sum': critical_sum,
                                                  'assigned_sum': assigned_sum, 'under_investigation_sum': under_investigation_sum,
                                                  'in_progress_sum': in_progress_sum, 'low_status_sum': low_status_sum,
-                                                 'pending_sum': pending_sum, 'task_list': task_list, 'next_action': next_action,})
+                                                 'pending_sum': pending_sum, 'task_list': task_list, 'updates': updates,
+                                                 'update_dict_dick': update_dict_dick})
 
 
 @login_required
@@ -229,8 +238,10 @@ def pbi_new(request, task_type):
         form = PbiForm(request.POST)
         if form.is_valid():
             pbi = form.save(commit=False)
+            pbi.task_id = pbi
             pbi.type = task_type
             pbi.save()
+            Update.objects.create(task=pbi, author=request.user, text='No Further Action', update_type='Next Action')
             return redirect('blog.views.'+task_type.lower()+'_view')
     else:
         if task_type == 'PBI':
