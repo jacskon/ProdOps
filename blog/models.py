@@ -162,7 +162,8 @@ class Pbi(models.Model):
     modified_date = models.DateTimeField(default=timezone.now)
     type = models.CharField(default='', max_length=30,
                             choices=activity_type)
-    state = models.CharField(max_length=10, choices=state_choices)
+    state = models.CharField(max_length=10, choices=state_choices,
+                             default="Open")
 
     def approved_updates(self):
         return self.updates.filter(approved=True)

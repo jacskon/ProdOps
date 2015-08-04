@@ -50,10 +50,14 @@ urlpatterns = [
     url(r'^activity/(?P<pk>[0-9]+)/$', views.pbi_detail, name='pbi_detail'),
     url(r'^activity/(?P<pk>[0-9]+)/edit/$', views.pbi_edit, name='pbi_edit'),
     url(r'^activity/(?P<pk>[0-9]+)/remove/$', views.pbi_remove, name='pbi_remove'),
+    url(r'^activity/(?P<pk>[0-9]+)/open/$', views.pbi_open, name='pbi_open'),
     url(r'^chart/$', views.pbi_chart, name='chart'),
     url(r'^operations/tracker$', views.operations_view, name='operations'),
     url(r'^activity/(?P<pk>[0-9]+)/update$', views.pbi_update, name='pbi_update'),
 
     ######TASK URL'S########
     url(r'^pbi/task/(?P<pk>[0-9]+)/edit/$', views.task_edit, name='task_edit'),
+
+    ######ANALYTICS######
+    url(r'^analytics/', views.analytics, name='analytics'),
 ]

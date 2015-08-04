@@ -1,0 +1,49 @@
+{% extends "blog/../base.html" %}
+
+{% block content %}
+    <div class="post">
+        <h1>Closed Operational Tasks</h1>
+        <table class="table table-striped table-bordered table-hover slider-table">
+            <tr>
+                <th>Title</th>
+                <th>Assignee</th>
+                <th>Closed Date</th>
+                <th></th>
+            </tr>
+            {% for task in operations_closed %}
+                <tr>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.assignee }}</td>
+                    <td>{{ task.modified_date }}</td>
+                    <td style="text-align: center; word-spacing: 3px;">
+                        <a href="{% url "pbi_open" pk=task.pk %}"><span class="glyphicon glyphicon-ok"></span></a>
+                        <a href="{% url "pbi_edit" pk=task.pk %}"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a href="{% url "pbi_detail" pk=task.pk %}"><span class="glyphicon glyphicon-info-sign"></span></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <h1>Closed PBI Tasks</h1>
+        <table class="table table-striped table-bordered table-hover slider-table">
+            <tr>
+                <th>Title</th>
+                <th>Assignee</th>
+                <th>Closed Date</th>
+                <td></td>
+            </tr>
+            {% for task in pbi_closed %}
+                <tr>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.assignee }}</td>
+                    <td>{{ task.modified_date }}</td>
+                    <td style="text-align: center; word-spacing: 3px;">
+                        <a href="{% url "pbi_open" pk=task.pk %}"><span class="glyphicon glyphicon-ok"></span></a>
+                        <a href="{% url "pbi_edit" pk=task.pk %}"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a href="{% url "pbi_detail" pk=task.pk %}"><span class="glyphicon glyphicon-info-sign"></span></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+
