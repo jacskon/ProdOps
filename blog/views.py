@@ -301,6 +301,7 @@ def pbi_update(request, pk):
         if form.is_valid():
             update = form.save(commit=False)
             update.task = pbi
+            Pbi.objects.filter(id=pbi.id).update(modified_date=timezone.now())
             update.author = request.user
             update.save()
             return redirect('blog.views.pbi_view')
