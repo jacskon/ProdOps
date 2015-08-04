@@ -149,16 +149,17 @@ class Pbi(models.Model):
     number = models.IntegerField(blank=True, null=True)
     title = models.CharField(max_length=30)
     description = models.TextField()
-    updates = models.TextField(blank=True, null=True)
     severity = models.CharField(max_length=30, choices=severity_options)
     status = models.CharField(max_length=30, choices=status_options)
     assignee = models.CharField(max_length=30)
     estimated_finish = models.DateField(
         default=timezone.now)
-    next_action = models.CharField(max_length=30)
     modified_date = models.DateTimeField(default=timezone.now)
     type = models.CharField(default='', max_length=30,
                             choices=activity_type)
+
+    def approved_updates(self):
+        return self.updates.filter(approved=True)
 
     def approve(self):
         self.approved = True
@@ -203,3 +204,23 @@ class Task(models.Model):
 
     def __str__(self):
         return self.task
+
+class Update(models.Model):
+    NEXT_ACTION = 'Next Action'
+    SELF_UPDATE = 'Update'
+    update_type_selection = (
+        (NEXT_ACTION, 'Next Action'),
+        (SELF_UPDATE, 'Update'),
+    )
+    task = models.ForeignKey('blog.Pbi', related_name='updates')
+    author = models.ForeignKey('auth.User')
+    text = models.TextField()
+    update_type = models.CharField(max_length=20, choices=update_type_selection)
+    created_date = models.DateTimeField(default=timezone.now)
+
+    def approve(self):
+        self.approved = True
+        self.save()
+
+    def __str__(self):
+        return self.text

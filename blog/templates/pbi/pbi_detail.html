@@ -2,12 +2,24 @@
 
 {% block content %}
     <div class="post">
-        <a class="btn btn-default" href="{% url "pbi_edit" pk=pbi.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-        <a class="btn btn-default" href="{% url "pbi_remove" pk=pbi.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
         <h1>{{ pbi.title }}</h1>
-        <p>{{ pbi.description }}</p>
-        <p>{{ pbi.number }}</p>
-        <p>{{ pbi.updates|linebreaks }}</p>
+        <table class="table table-striped table-bordered table-hover slider-table">
+            <tr>
+                <th>Modified Date</th>
+                <th>Update Type</th>
+                <th>Update Text</th>
+            </tr>
+            {% for update in update %}
+                <tr>
+                    <td>{{ update.created_date }}</td>
+                    <td>{{ update.update_type }}</td>
+                    <td>{{ update.text }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <a class="btn btn-default" href="{% url "pbi_edit" pk=pbi.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+        <a class="btn btn-default" href="{% url "pbi_update" pk=pbi.pk %}"><span class="glyphicon glyphicon-plus"></span></a>
+        <a class="btn btn-default" href="{% url "pbi_remove" pk=pbi.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
     </div>
 {% endblock %}
 

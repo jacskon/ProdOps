@@ -33,7 +33,13 @@
                     {% else %}
                         <td>{{ problem.estimated_finish }}</td>
                     {% endif %}
-                    <td>{{ problem.next_action }}</td>
+                    <td>
+                     {% for item in pbi_dict.items %}
+                        {% if item.0 == problem.id %}
+                            {{ item.1 }}
+                        {% endif %}
+                    {% endfor %}
+
                     <td style="text-align: center; word-spacing: 3px;">
                         <a href="{% url "pbi_remove" pk=problem.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
                         <a href="{% url "pbi_edit" pk=problem.pk %}"><span class="glyphicon glyphicon-edit"></span></a>
