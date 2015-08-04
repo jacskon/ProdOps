@@ -145,7 +145,12 @@ class Pbi(models.Model):
         (PBI, 'PBI'),
         (OPERATIONS, 'Operations'),
     )
-
+    OPEN = 'Open'
+    CLOSED = 'Closed'
+    state_choices = (
+        (OPEN, 'Open'),
+        (CLOSED, 'Closed')
+    )
     number = models.IntegerField(blank=True, null=True)
     title = models.CharField(max_length=30)
     description = models.TextField()
@@ -157,6 +162,8 @@ class Pbi(models.Model):
     modified_date = models.DateTimeField(default=timezone.now)
     type = models.CharField(default='', max_length=30,
                             choices=activity_type)
+    state = models.CharField(max_length=10, choices=state_choices,
+                             default="Open")
 
     def approved_updates(self):
         return self.updates.filter(approved=True)
@@ -224,3 +231,4 @@ class Update(models.Model):
 
     def __str__(self):
         return self.text
+

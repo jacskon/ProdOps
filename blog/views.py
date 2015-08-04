@@ -185,7 +185,7 @@ def comment_remove(request, pk):
 
 @login_required
 def pbi_view(request):
-    pbi_tasks = Pbi.objects.all().filter(type='PBI')
+    pbi_tasks = Pbi.objects.all().filter(type='PBI', state="Open")
     pbi_dict = {}
     for pbi in pbi_tasks:
             pbi_dict[pbi.id] = pbi.updates.all().filter(update_type="Next Action").order_by('-created_date')[0]
@@ -209,7 +209,7 @@ def pbi_view(request):
 
 @login_required
 def operations_view(request):
-    operations_tasks = Pbi.objects.all().filter(type='Operations')
+    operations_tasks = Pbi.objects.all().filter(type='Operations', state="Open")
     update_dict_dick = {}
     for pbi in operations_tasks:
             update_dict_dick[pbi.id] = pbi.updates.all().filter(update_type="Next Action").order_by('-created_date')[0]
@@ -273,7 +273,13 @@ def pbi_detail(request, pk):
 @login_required
 def pbi_remove(request, pk):
     pbi = get_object_or_404(Pbi, pk=pk)
-    pbi.delete()
+    Pbi.objects.filter(id=pbi.id).update(state="Closed")
+    return redirect('blog.views.analytics')
+
+@login_required
+def pbi_open(request, pk):
+    pbi = get_object_or_404(Pbi, pk=pk)
+    Pbi.objects.filter(id=pbi.id).update(state="Open")
     return redirect('blog.views.pbi_view')
 
 @login_required
@@ -301,9 +307,20 @@ def pbi_update(request, pk):
         if form.is_valid():
             update = form.save(commit=False)
             update.task = pbi
+            Pbi.objects.filter(id=pbi.id).update(modified_date=timezone.now())
             update.author = request.user
             update.save()
             return redirect('blog.views.pbi_view')
     else:
         form = UpdateForm()
     return render(request, 'pbi/update/pbi_update.html', {'form': form})
+
+def analytics(request):
+    pbi_closed = Pbi.objects.all().filter(state="Closed", type="PBI")
+    pbi_open = Pbi.objects.all().filter(state="Open", type="PBI")
+    operations_closed = Pbi.objects.all().filter(state="Closed", type="Operations")
+    operations_open = Pbi.objects.all().filter(state="Open", type="Operations")
+    return render(request, 'analytics/index.html', {"pbi_open": pbi_open, "pbi_closed": pbi_closed,
+                  "operations_open": operations_open, "operations_closed": operations_closed})
+
+

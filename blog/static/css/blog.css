@@ -173,5 +173,5 @@ h1, h2, h3, h4 {
 .scroll-table {
     max-height: 500px;
     overflow: auto;
-    margin-bottom: 2%;
+    /*margin-bottom: 2%;*/
 }
