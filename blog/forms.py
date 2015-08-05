@@ -31,13 +31,13 @@ class PbiForm(forms.ModelForm):
 
     class Meta:
         model = Pbi
-        fields = ('number', 'title', 'description', 'severity', 'status', 'assignee', 'estimated_finish')
+        fields = ('number', 'title', 'description', 'severity', 'status', 'assignee', 'estimated_finish', 'state')
 
 class OperationsForm(forms.ModelForm):
 
     class Meta:
         model = Pbi
-        fields = ('title', 'description', 'severity', 'status', 'assignee', 'estimated_finish')
+        fields = ('title', 'description', 'severity', 'status', 'assignee', 'estimated_finish', 'progress_bar', 'state')
 
 class TaskForm(forms.ModelForm):
 

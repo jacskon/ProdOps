@@ -17,7 +17,7 @@
                     <td>{{ task.modified_date }}</td>
                     <td style="text-align: center; word-spacing: 3px;">
                         <a href="{% url "pbi_open" pk=task.pk %}"><span class="glyphicon glyphicon-ok"></span></a>
-                        <a href="{% url "pbi_edit" pk=task.pk %}"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a href="{% url "pbi_edit" pk=task.pk task_type='Operations' %}"><span class="glyphicon glyphicon-edit"></span></a>
                         <a href="{% url "pbi_detail" pk=task.pk %}"><span class="glyphicon glyphicon-info-sign"></span></a>
                     </td>
                 </tr>
@@ -38,7 +38,7 @@
                     <td>{{ task.modified_date }}</td>
                     <td style="text-align: center; word-spacing: 3px;">
                         <a href="{% url "pbi_open" pk=task.pk %}"><span class="glyphicon glyphicon-ok"></span></a>
-                        <a href="{% url "pbi_edit" pk=task.pk %}"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a href="{% url "pbi_edit" pk=task.pk task_type='PBI'%}"><span class="glyphicon glyphicon-edit"></span></a>
                         <a href="{% url "pbi_detail" pk=task.pk %}"><span class="glyphicon glyphicon-info-sign"></span></a>
                     </td>
                 </tr>

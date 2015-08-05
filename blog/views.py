@@ -185,11 +185,10 @@ def comment_remove(request, pk):
 
 @login_required
 def pbi_view(request):
-    pbi_tasks = Pbi.objects.all().filter(type='PBI', state="Open")
     pbi_dict = {}
     for pbi in pbi_tasks:
             pbi_dict[pbi.id] = pbi.updates.all().filter(update_type="Next Action").order_by('-created_date')[0]
-    pbi = Pbi.objects.all().filter(type="PBI")
+    pbi = Pbi.objects.all().filter(type="PBI", state="Open")
     task_list = Task.objects.all()
     medium_sum = pbi.filter(severity='Medium').count()
     low_sum = pbi.filter(severity='Low').count()
@@ -204,7 +203,7 @@ def pbi_view(request):
                                                  'high_sum': high_sum, 'critical_sum': critical_sum,
                                                  'assigned_sum': assigned_sum, 'under_investigation_sum': under_investigation_sum,
                                                  'in_progress_sum': in_progress_sum, 'low_status_sum': low_status_sum,
-                                                 'pending_sum': pending_sum, 'task_list': task_list,
+                                                 'pending_sum': pending_sum, 
                                                  'pbi_dict': pbi_dict})
 
 @login_required
@@ -251,17 +250,26 @@ def pbi_new(request, task_type):
     return render(request, 'pbi/pbi_create.html', {'form': form, 'task_type': task_type})
 
 @login_required
-def pbi_edit(request, pk):
+def pbi_edit(request, pk, task_type):
     pbi = get_object_or_404(Pbi, pk=pk)
     if request.method == "POST":
-        form = PbiForm(request.POST, instance=pbi)
+        if task_type == 'PBI':
+            form = PbiForm(request.POST, instance=pbi)
+        else:
+            form = OperationsForm(request.POST, instance=pbi)
         if form.is_valid():
             pbi = form.save(commit=False)
             pbi.modified_date = timezone.now()
             pbi.save()
-            return redirect('blog.views.pbi_view')
+            if task_type == 'PBI':
+                return redirect('blog.views.pbi_view')
+            elif task_type == 'Operations':
+                return redirect('blog.views.operations_view')
     else:
-        form = PbiForm(instance=pbi)
+        if task_type == 'PBI':
+            form = PbiForm(instance=pbi)
+        else:
+            form = OperationsForm(instance=pbi)
     return render(request, 'pbi/pbi_edit.html', {'form': form})
 
 @login_required

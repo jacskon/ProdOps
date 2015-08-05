@@ -9,7 +9,7 @@
 {% endblock %}
 {% block content %}
     <h3>Production Operations Task Tracker</h3>
-    <div class="table-slider">
+    <div class="scroll-table">
     <table id="pbi"  class="table table-striped table-bordered table-hover">
         <tr>
             <th>Title</th>
@@ -18,6 +18,7 @@
             <th>Asignee</th>
             <th>ETA</th>
             <th>Next Action</th>
+            <th>Progress</th>
             <th></th>
         </tr>
         {% for problem in operations_tasks %}
@@ -38,9 +39,20 @@
                         {% endif %}
                     {% endfor %}
                 </td>
+                <td style="height:1px; padding:10px 0;">
+                    <div style="width:{{ problem.progress_bar }}%; height:100%; vertical-align: middle;"
+                            {% if problem.progress_bar < 34 %}
+                            class="progression-third"
+                            {% elif problem.progress_bar < 80 %}
+                            class="progression-two-thirds"
+                            {% else %}
+                            class="progression-complete"
+                            {% endif %}
+                            ></div>
+                </td>
                 <td style="text-align: center; word-spacing: 3px;">
                     <a href="{% url "pbi_remove" pk=problem.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
-                    <a href="{% url "pbi_edit" pk=problem.pk %}"><span class="glyphicon glyphicon-edit"></span></a>
+                    <a href="{% url "pbi_edit" pk=problem.pk task_type='Operations' %}"><span class="glyphicon glyphicon-edit"></span></a>
                     <a href="{% url "pbi_detail" pk=problem.pk %}"><span class="glyphicon glyphicon-info-sign"></span></a>
                 </td>
             </tr>
