@@ -1,0 +1,15 @@
+{% extends "blog/../base.html" %}
+
+{% block content %}
+    {% if action == "close" %}
+    <h1>Close Task</h1>
+    <p>Please provide a comment as to why the task is now closed</p>
+    {% elif action == "open" %}
+    <h1>Open Task</h1>
+    <p>Please provide a comment as to why the task is now open</p>
+    {% endif %}
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %}
