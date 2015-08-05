@@ -176,6 +176,20 @@ h1, h2, h3, h4 {
     margin-bottom: 2%;
 }
 
+.edit-list {
+    width: 0;
+    float: right;
+}
+
+.edit-list td {
+    padding: 50px !important;
+}
+
+.update-list {
+    width: 60%;
+    flaot: left;
+}
+
 .progression-complete {
     background: rgba(223,255,179,1);
     background: -moz-linear-gradient(left, rgba(223,255,179,1) 0%, rgba(160,224,70,1) 33%, rgba(101,150,34,1) 100%);

@@ -133,23 +133,19 @@ class Pbi(models.Model):
     UNDER_INVESTIGATION = 'Under Investigation'
     PENDING = 'Pending'
     ASSIGNED = 'Assigned'
+    CLOSED = 'Closed'
     status_options = (
         (IN_PROGRESS, 'In Progress'),
         (UNDER_INVESTIGATION, 'Under Investigation'),
         (PENDING, 'Pending'),
         (ASSIGNED, 'Assigned'),
+        (CLOSED, 'Closed'),
     )
     PBI = 'PBI'
     OPERATIONS = 'Operations'
     activity_type = (
         (PBI, 'PBI'),
         (OPERATIONS, 'Operations'),
-    )
-    OPEN = 'Open'
-    CLOSED = 'Closed'
-    state_choices = (
-        (OPEN, 'Open'),
-        (CLOSED, 'Closed')
     )
     progress_bar = models.IntegerField()
     number = models.IntegerField(blank=True, null=True)
@@ -162,7 +158,6 @@ class Pbi(models.Model):
         default=timezone.now)
     modified_date = models.DateTimeField(default=timezone.now)
     type = models.CharField(default='', max_length=30, choices=activity_type)
-    state = models.CharField(max_length=10, choices=state_choices, default="Open")
 
     def approved_updates(self):
         return self.updates.filter(approved=True)

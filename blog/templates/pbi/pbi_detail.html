@@ -3,7 +3,28 @@
 {% block content %}
     <div class="post">
         <h1>{{ pbi.title }}</h1>
-        <table class="table table-striped table-bordered table-hover slider-table">
+        <table class="table table-striped table-bordered table-hover edit-list">
+            <tr>
+                <td valign="middle">Edit</td>
+                <td><a class="btn btn-default" href="{% url "pbi_edit" pk=pbi.pk task_type="PBI" %}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+            </tr>
+            <tr>
+                <td valign="middle">Add Update</td>
+                <td><a class="btn btn-default" href="{% url "pbi_update" pk=pbi.pk %}"><span class="glyphicon glyphicon-plus"></span></a></td>
+            </tr>
+            {% if pbi.status == "Closed" %}
+                <tr>
+                    <td valign="middle">Open Problem</td>
+                    <td><a class="btn btn-default" href="{% url "pbi_open" pk=pbi.pk %}"><span class="glyphicon glyphicon-open"></span></a></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td valign="middle">Close Problem</td>
+                    <td><a class="btn btn-default" href="{% url "pbi_remove" pk=pbi.pk %}"><span class="glyphicon glyphicon-remove"></span></a></td>
+                </tr>
+            {% endif %}
+        </table>
+        <table class="table table-striped table-bordered table-hover slider-table update-list">
             <tr>
                 <th>Modified Date</th>
                 <th>Update Type</th>
@@ -17,9 +38,6 @@
                 </tr>
             {% endfor %}
         </table>
-        <a class="btn btn-default" href="{% url "pbi_edit" pk=pbi.pk task_type="PBI" %}"><span class="glyphicon glyphicon-pencil"></span></a>
-        <a class="btn btn-default" href="{% url "pbi_update" pk=pbi.pk %}"><span class="glyphicon glyphicon-plus"></span></a>
-        <a class="btn btn-default" href="{% url "pbi_remove" pk=pbi.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
     </div>
 {% endblock %}
 
