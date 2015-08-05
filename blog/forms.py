@@ -51,6 +51,12 @@ class UpdateForm(forms.ModelForm):
         model = Update
         fields = ('text', 'update_type')
 
+class CloseForm(forms.ModelForm):
+
+    class Meta:
+        model = Update
+        fields = ('text',)
+
 # """jobName1    jobParams1    jobTarget1    jobTargetType1    jobCredentials1    jobDescription1
 # jobName2    jobParams2    jobTarget2    jobTargetType2    jobCredentials2    jobDescription2
 # """

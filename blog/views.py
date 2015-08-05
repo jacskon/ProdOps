@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
+import pdb
 from .models import *
 from .forms import *
 from django.shortcuts import redirect
@@ -254,6 +255,7 @@ def pbi_new(request, task_type):
 def pbi_edit(request, pk, task_type):
     pbi = get_object_or_404(Pbi, pk=pk)
     if request.method == "POST":
+        pdb.set_trace()
         if task_type == 'PBI':
             form = PbiForm(request.POST, instance=pbi)
         else:
@@ -282,14 +284,40 @@ def pbi_detail(request, pk):
 @login_required
 def pbi_remove(request, pk):
     pbi = get_object_or_404(Pbi, pk=pk)
-    Pbi.objects.filter(id=pbi.id).update(status="Closed")
-    return redirect('blog.views.analytics')
+    if request.method == "POST":
+        form = CloseForm(request.POST)
+        if form.is_valid():
+            update = form.save(commit=False)
+            update.task = pbi
+            update.update_type = "Closed"
+            Pbi.objects.filter(id=pbi.id).update(modified_date=timezone.now())
+            update.author = request.user
+            update.save()
+            Pbi.objects.filter(id=pbi.id).update(status="Closed")
+            return redirect('blog.views.analytics')
+    else:
+        form = CloseForm()
+        action = "close"
+    return render(request, 'pbi/update/open_close_form.html', {'form': form, 'action': action})
 
 @login_required
 def pbi_open(request, pk):
     pbi = get_object_or_404(Pbi, pk=pk)
-    Pbi.objects.filter(id=pbi.id).update(status="Open")
-    return redirect('blog.views.pbi_view')
+    if request.method == "POST":
+        form = CloseForm(request.POST)
+        if form.is_valid():
+            update = form.save(commit=False)
+            update.task = pbi
+            update.update_type = "Re-Opened"
+            Pbi.objects.filter(id=pbi.id).update(modified_date=timezone.now())
+            update.author = request.user
+            update.save()
+            Pbi.objects.filter(id=pbi.id).update(status="In Progress")
+            return redirect('blog.views.analytics')
+    else:
+        form = CloseForm()
+        action = "open"
+    return render(request, 'pbi/update/open_close_form.html', {'form': form, 'action': action})
 
 @login_required
 def pbi_chart(request):
