@@ -185,10 +185,11 @@ def comment_remove(request, pk):
 
 @login_required
 def pbi_view(request):
+    pbi_tasks = Pbi.objects.all().filter(type='PBI').exclude(status="Closed")
     pbi_dict = {}
     for pbi in pbi_tasks:
             pbi_dict[pbi.id] = pbi.updates.all().filter(update_type="Next Action").order_by('-created_date')[0]
-    pbi = Pbi.objects.all().filter(type="PBI", state="Open")
+    pbi = Pbi.objects.all().filter(type="PBI").exclude(status="Closed")
     task_list = Task.objects.all()
     medium_sum = pbi.filter(severity='Medium').count()
     low_sum = pbi.filter(severity='Low').count()
@@ -203,12 +204,12 @@ def pbi_view(request):
                                                  'high_sum': high_sum, 'critical_sum': critical_sum,
                                                  'assigned_sum': assigned_sum, 'under_investigation_sum': under_investigation_sum,
                                                  'in_progress_sum': in_progress_sum, 'low_status_sum': low_status_sum,
-                                                 'pending_sum': pending_sum, 
+                                                 'pending_sum': pending_sum, 'task_list': task_list,
                                                  'pbi_dict': pbi_dict})
 
 @login_required
 def operations_view(request):
-    operations_tasks = Pbi.objects.all().filter(type='Operations', state="Open")
+    operations_tasks = Pbi.objects.all().filter(type='Operations').exclude(status="Closed")
     update_dict_dick = {}
     for pbi in operations_tasks:
             update_dict_dick[pbi.id] = pbi.updates.all().filter(update_type="Next Action").order_by('-created_date')[0]
@@ -281,13 +282,13 @@ def pbi_detail(request, pk):
 @login_required
 def pbi_remove(request, pk):
     pbi = get_object_or_404(Pbi, pk=pk)
-    Pbi.objects.filter(id=pbi.id).update(state="Closed")
+    Pbi.objects.filter(id=pbi.id).update(status="Closed")
     return redirect('blog.views.analytics')
 
 @login_required
 def pbi_open(request, pk):
     pbi = get_object_or_404(Pbi, pk=pk)
-    Pbi.objects.filter(id=pbi.id).update(state="Open")
+    Pbi.objects.filter(id=pbi.id).update(status="Open")
     return redirect('blog.views.pbi_view')
 
 @login_required
@@ -324,11 +325,9 @@ def pbi_update(request, pk):
     return render(request, 'pbi/update/pbi_update.html', {'form': form})
 
 def analytics(request):
-    pbi_closed = Pbi.objects.all().filter(state="Closed", type="PBI")
-    pbi_open = Pbi.objects.all().filter(state="Open", type="PBI")
-    operations_closed = Pbi.objects.all().filter(state="Closed", type="Operations")
-    operations_open = Pbi.objects.all().filter(state="Open", type="Operations")
-    return render(request, 'analytics/index.html', {"pbi_open": pbi_open, "pbi_closed": pbi_closed,
-                  "operations_open": operations_open, "operations_closed": operations_closed})
+    pbi_closed = Pbi.objects.all().filter(status="Closed", type="PBI")
+    operations_closed = Pbi.objects.all().filter(status="Closed", type="Operations")
+    return render(request, 'analytics/index.html', {"pbi_closed": pbi_closed,
+                  "operations_closed": operations_closed})
 
 
