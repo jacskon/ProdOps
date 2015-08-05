@@ -173,5 +173,31 @@ h1, h2, h3, h4 {
 .scroll-table {
     max-height: 500px;
     overflow: auto;
-    /*margin-bottom: 2%;*/
+    margin-bottom: 2%;
+}
+
+.progression-complete {
+    background: rgba(223,255,179,1);
+    background: -moz-linear-gradient(left, rgba(223,255,179,1) 0%, rgba(160,224,70,1) 33%, rgba(101,150,34,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(223,255,179,1)), color-stop(46%, rgba(160,224,70,1)), color-stop(100%, rgba(101,150,34,1)));
+    background: -webkit-linear-gradient(left, rgba(223,255,179,1) 0%, rgba(160,224,70,1) 33%, rgba(101,150,34,1) 100%);
+    background: -o-linear-gradient(left, rgba(223,255,179,1) 0%, rgba(160,224,70,1) 33%, rgba(101,150,34,1) 100%);
+    background: -ms-linear-gradient(left, rgba(223,255,179,1) 0%, rgba(160,224,70,1) 33%, rgba(101,150,34,1) 100%);
+    background: linear-gradient(to right, rgba(223,255,179,1) 0%, rgba(160,224,70,1) 33%, rgba(101,150,34,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dfffb3', endColorstr='#659622', GradientType=1 );
+}
+
+.progression-third {
+    background-color: #dfffb3;
+}
+
+.progression-two-thirds {
+    background: rgba(223,255,179,1);
+    background: -moz-linear-gradient(left, rgba(223,255,179,1) 0%, rgba(160,224,70,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(223,255,179,1)), color-stop(100%, rgba(160,224,70,1)));
+    background: -webkit-linear-gradient(left, rgba(223,255,179,1) 0%, rgba(160,224,70,1) 100%);
+    background: -o-linear-gradient(left, rgba(223,255,179,1) 0%, rgba(160,224,70,1) 100%);
+    background: -ms-linear-gradient(left, rgba(223,255,179,1) 0%, rgba(160,224,70,1) 100%);
+    background: linear-gradient(to right, rgba(223,255,179,1) 0%, rgba(160,224,70,1) 100%);
+
 }

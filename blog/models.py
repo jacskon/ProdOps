@@ -151,6 +151,7 @@ class Pbi(models.Model):
         (OPEN, 'Open'),
         (CLOSED, 'Closed')
     )
+    progress_bar = models.IntegerField()
     number = models.IntegerField(blank=True, null=True)
     title = models.CharField(max_length=30)
     description = models.TextField()
@@ -160,10 +161,8 @@ class Pbi(models.Model):
     estimated_finish = models.DateField(
         default=timezone.now)
     modified_date = models.DateTimeField(default=timezone.now)
-    type = models.CharField(default='', max_length=30,
-                            choices=activity_type)
-    state = models.CharField(max_length=10, choices=state_choices,
-                             default="Open")
+    type = models.CharField(default='', max_length=30, choices=activity_type)
+    state = models.CharField(max_length=10, choices=state_choices, default="Open")
 
     def approved_updates(self):
         return self.updates.filter(approved=True)

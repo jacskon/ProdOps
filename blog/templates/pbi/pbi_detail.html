@@ -17,7 +17,7 @@
                 </tr>
             {% endfor %}
         </table>
-        <a class="btn btn-default" href="{% url "pbi_edit" pk=pbi.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+        <a class="btn btn-default" href="{% url "pbi_edit" pk=pbi.pk task_type="PBI" %}"><span class="glyphicon glyphicon-pencil"></span></a>
         <a class="btn btn-default" href="{% url "pbi_update" pk=pbi.pk %}"><span class="glyphicon glyphicon-plus"></span></a>
         <a class="btn btn-default" href="{% url "pbi_remove" pk=pbi.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
     </div>
