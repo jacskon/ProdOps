@@ -178,6 +178,16 @@ h1, h2, h3, h4 {
 
 .edit-list {
     width: 0;
+    float: right;
+}
+
+.edit-list td {
+    padding: 50px !important;
+}
+
+.update-list {
+    width: 60%;
+    flaot: left;
 }
 
 .progression-complete {
