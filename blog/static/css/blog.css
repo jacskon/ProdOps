@@ -176,17 +176,19 @@ h1, h2, h3, h4 {
 }
 
 .edit-list {
-    width: 0;
-    float: right;
+    width: 60%;
+    float:left;
+    margin-bottom: 0px !important;
 }
 
 .edit-list td {
-    padding: 50px !important;
+    width: 50px;
+    text-align: center;
 }
 
 .update-list {
     width: 60%;
-    flaot: left;
+    float: left;
 }
 
 .menu-dropdown {
