@@ -147,7 +147,7 @@ class Pbi(models.Model):
         (PBI, 'PBI'),
         (OPERATIONS, 'Operations'),
     )
-    progress_bar = models.IntegerField()
+    progress_bar = models.IntegerField(null=True)
     number = models.IntegerField(blank=True, null=True)
     title = models.CharField(max_length=30)
     description = models.TextField()

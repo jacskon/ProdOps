@@ -236,7 +236,10 @@ def operations_view(request):
 @login_required
 def pbi_new(request, task_type):
     if request.method == "POST":
-        form = PbiForm(request.POST)
+        if task_type == 'PBI':
+            form = PbiForm(request.POST)
+        else:
+            form = OperationsForm(request.POST)
         if form.is_valid():
             pbi = form.save(commit=False)
             pbi.task_id = pbi
@@ -255,7 +258,6 @@ def pbi_new(request, task_type):
 def pbi_edit(request, pk, task_type):
     pbi = get_object_or_404(Pbi, pk=pk)
     if request.method == "POST":
-        pdb.set_trace()
         if task_type == 'PBI':
             form = PbiForm(request.POST, instance=pbi)
         else:

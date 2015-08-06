@@ -42,7 +42,6 @@ h1, h2, h3, h4 {
 .top-menu, .top-menu:hover, .top-menu:visited {
     color: #6F6F6F;
     float: right;
-    font-size: 20pt;
     margin-right: 20px;
 }
 
@@ -188,6 +187,14 @@ h1, h2, h3, h4 {
 .update-list {
     width: 60%;
     flaot: left;
+}
+
+.menu-dropdown {
+    height: 100px;
+    display: table;
+    width: 10%;
+    float: right;
+    margin: -20px -20px -20px -40px;
 }
 
 .progression-complete {
