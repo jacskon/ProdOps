@@ -176,8 +176,8 @@ h1, h2, h3, h4 {
 }
 
 .edit-list {
-    width: 60%;
-    float:left;
+    width: 20%;
+    float:right;
     margin-bottom: 0px !important;
 }
 
