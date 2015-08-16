@@ -21,8 +21,8 @@
         <div class="page-header">
             {% if user.is_authenticated %}
                 <div class="dropdown menu-dropdown">
-                <div class="dropdown-toggle" data-toggle="dropdown" style="height: 100px;display: table-cell; vertical-align: middle;"">Menu
-                <span class="caret"></span></div>
+                <div class="dropdown-toggle" data-toggle="dropdown" style="cursor: pointer; height: 100px;display: table-cell; vertical-align: middle;"">Menu
+                <span class="button caret"></span></div>
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'calendar_view' %}" class="top-menu" title="Calendar">Calendar</a></li>
                         <li><a href="{% url 'analytics' %}" class="top-menu" title="Analytics">Task History</a></li>

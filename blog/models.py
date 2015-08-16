@@ -147,7 +147,6 @@ class Pbi(models.Model):
         (PBI, 'PBI'),
         (OPERATIONS, 'Operations'),
     )
-    progress_bar = models.IntegerField(null=True)
     number = models.IntegerField(blank=True, null=True)
     title = models.CharField(max_length=30)
     description = models.TextField()
@@ -158,6 +157,7 @@ class Pbi(models.Model):
         default=timezone.now)
     modified_date = models.DateTimeField(default=timezone.now)
     type = models.CharField(default='', max_length=30, choices=activity_type)
+    progress_bar = models.IntegerField(null=True)
 
     def approved_updates(self):
         return self.updates.filter(approved=True)
