@@ -11,8 +11,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='pbi',
-            name='type',
+        migrations.AddField(
+            model_name='update',
+            name='test_text',
+            field=models.TextField(default='Test'),
+            preserve_default=False,
         ),
     ]

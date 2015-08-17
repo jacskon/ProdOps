@@ -197,7 +197,7 @@ def pbi_view(request):
     high_sum = pbi.filter(severity='High').count()
     critical_sum = pbi.filter(severity='Critical').count()
     assigned_sum = pbi.filter(status='Assigned').count()
-    under_investigation_sum = pbi.filter(status='Under investigation').count()
+    under_investigation_sum = pbi.filter(status='Under Investigation').count()
     in_progress_sum = pbi.filter(status='In Progress').count()
     low_status_sum = pbi.filter(status='Low').count()
     pending_sum = pbi.filter(status='Pending').count()
@@ -221,7 +221,7 @@ def operations_view(request):
     high_sum = operations_tasks.filter(severity='High').count()
     critical_sum = operations_tasks.filter(severity='Critical').count()
     assigned_sum = operations_tasks.filter(status='Assigned').count()
-    under_investigation_sum = operations_tasks.filter(status='Under investigation').count()
+    under_investigation_sum = operations_tasks.filter(status='Under Investigation').count()
     in_progress_sum = operations_tasks.filter(status='In Progress').count()
     low_status_sum = operations_tasks.filter(status='Low').count()
     pending_sum = operations_tasks.filter(status='Pending').count()
@@ -236,7 +236,10 @@ def operations_view(request):
 @login_required
 def pbi_new(request, task_type):
     if request.method == "POST":
-        form = PbiForm(request.POST)
+        if task_type == 'PBI':
+            form = PbiForm(request.POST)
+        else:
+            form = OperationsForm(request.POST)
         if form.is_valid():
             pbi = form.save(commit=False)
             pbi.task_id = pbi
@@ -255,7 +258,6 @@ def pbi_new(request, task_type):
 def pbi_edit(request, pk, task_type):
     pbi = get_object_or_404(Pbi, pk=pk)
     if request.method == "POST":
-        pdb.set_trace()
         if task_type == 'PBI':
             form = PbiForm(request.POST, instance=pbi)
         else:

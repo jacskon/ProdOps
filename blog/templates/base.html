@@ -20,12 +20,16 @@
     <body>
         <div class="page-header">
             {% if user.is_authenticated %}
-            <a href="{% url 'calendar_view' %}" class="top-menu" title="Calendar"><span class="glyphicon glyphicon-calendar"></span></a>
-            <a href="{% url 'analytics' %}" class="top-menu" title="Analytics"><span class="glyphicon glyphicon-stats"></span></a>
-            <a href="{% url 'pbi' %}" class="top-menu" title="PBI's"><span class="glyphicon glyphicon-th-list"></span></a>
-            <a href="{% url 'operations' %}" class="top-menu" title="Operations"><span class="glyphicon glyphicon-off"></span></a>
-                {% block menu_links %}
-                {% endblock %}
+                <div class="dropdown menu-dropdown">
+                <div class="dropdown-toggle" data-toggle="dropdown" style="cursor: pointer; height: 100px;display: table-cell; vertical-align: middle;"">Menu
+                <span class="button caret"></span></div>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'calendar_view' %}" class="top-menu" title="Calendar">Calendar</a></li>
+                        <li><a href="{% url 'analytics' %}" class="top-menu" title="Analytics">Task History</a></li>
+                        <li><a href="{% url 'pbi' %}" class="top-menu" title="PBI's">Level 2 Tasks</a></li>
+                        <li><a href="{% url 'operations' %}" class="top-menu" title="Operations">Operations Tasks</a></li>
+                    </ul>
+                </div>
             {% else %}
             <a href="{% url 'django.contrib.auth.views.login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
             {% endif %}
@@ -35,9 +39,8 @@
         <div class="content">
             <div class="row">
                 <div class="col-md-12">
-
+                {% block menu_links %}{% endblock %}
                 {% block content %}
-
                 {% endblock %}
                 </div>
             </div>

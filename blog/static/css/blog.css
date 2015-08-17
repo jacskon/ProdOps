@@ -10,9 +10,9 @@
     font-size: 36pt;
     text-decoration: none;
 }
-.table-striped > tbody > tr:nth-child(2n+2) > td, .table-striped > tbody > tr:nth-child(2n+2) > th {
-   background-color: white;
-}
+/*.table-striped > tbody > tr:nth-child(2n+2) > td, .table-striped > tbody > tr:nth-child(2n+2) > th {*/
+   /*background-color: white;*/
+/*}*/
 
 .content {
     margin-left: 40px;
@@ -42,7 +42,6 @@ h1, h2, h3, h4 {
 .top-menu, .top-menu:hover, .top-menu:visited {
     color: #6F6F6F;
     float: right;
-    font-size: 20pt;
     margin-right: 20px;
 }
 
@@ -177,17 +176,27 @@ h1, h2, h3, h4 {
 }
 
 .edit-list {
-    width: 0;
-    float: right;
+    width: 20%;
+    float:right;
+    margin-bottom: 0px !important;
 }
 
 .edit-list td {
-    padding: 50px !important;
+    width: 50px;
+    text-align: center;
 }
 
 .update-list {
-    width: 60%;
-    flaot: left;
+    width: 70%;
+    float: left;
+}
+
+.menu-dropdown {
+    height: 100px;
+    display: table;
+    width: 10%;
+    float: right;
+    margin: -20px -20px -20px -40px;
 }
 
 .progression-complete {
@@ -213,5 +222,9 @@ h1, h2, h3, h4 {
     background: -o-linear-gradient(left, rgba(223,255,179,1) 0%, rgba(160,224,70,1) 100%);
     background: -ms-linear-gradient(left, rgba(223,255,179,1) 0%, rgba(160,224,70,1) 100%);
     background: linear-gradient(to right, rgba(223,255,179,1) 0%, rgba(160,224,70,1) 100%);
+}
 
+.dropdown-menu {
+    top: 60% !important;
+    left: -9em !important;
 }

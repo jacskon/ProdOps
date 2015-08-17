@@ -7,13 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0009_auto_20150803_1043'),
+        ('blog', '0002_update_test_text'),
     ]
 
     operations = [
-        migrations.AlterField(
+        migrations.RenameField(
             model_name='pbi',
-            name='updates',
-            field=models.TextField(blank=True, null=True),
+            old_name='progress_bar',
+            new_name='progressing_bar',
         ),
     ]
